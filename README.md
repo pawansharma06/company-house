@@ -1,6 +1,9 @@
 # company-house-search-plugin
 ## Wordpress plugin for Companieshouse.gov.uk search
 
+###### Demo
+[Gov.uk company search plugin](https://theangeltrust.com/gov-uk-company-search/)
+
 ###### Shortcode
 [companieshouse]
 
