@@ -5,7 +5,7 @@
 [Gov.uk company search plugin](https://theangeltrust.com/gov-uk-company-search/)
 
 ###### Shortcode
-[companieshouse]
+[company_house]
 
 *Use do_shortcode.*
 
