@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Exclude development/repository files from release archives
+.github export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+README.md export-ignore
