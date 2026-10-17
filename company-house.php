@@ -10,7 +10,7 @@
  * Author URI:        https://planetarymarketing.in
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       company-house
+ * Text Domain:       planetary-company-search-for-companies-house
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -123,8 +123,8 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 		 */
 		public function create_plugin_settings_page() {
 			add_menu_page(
-				__( 'Company House Search', 'company-house' ),
-				__( 'Company House', 'company-house' ),
+				__( 'Company House Search', 'planetary-company-search-for-companies-house' ),
+				__( 'Company House', 'planetary-company-search-for-companies-house' ),
 				'manage_options',
 				'company_house_options',
 				array( $this, 'company_house_options_page_html' ),
@@ -146,27 +146,27 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 					<?php
 					settings_fields( 'company_house_options' );
 					do_settings_sections( 'company_house_options' );
-					submit_button( __( 'Save Settings', 'company-house' ) );
+					submit_button( __( 'Save Settings', 'planetary-company-search-for-companies-house' ) );
 					?>
 				</form>
 				<hr />
-				<h2><?php esc_html_e( 'API Key Setup Checklist (Avoiding HTTP 400 / 401 Errors)', 'company-house' ); ?></h2>
+				<h2><?php esc_html_e( 'API Key Setup Checklist (Avoiding HTTP 400 / 401 Errors)', 'planetary-company-search-for-companies-house' ); ?></h2>
 				<ol>
 					<li>
 						<?php
 						printf(
 							/* translators: %s: Companies House manage applications URL */
-							wp_kses_post( __( 'Go to <a href="%s" target="_blank" rel="noopener noreferrer">Companies House Developer Hub &rarr; Your applications</a>.', 'company-house' ) ),
+							wp_kses_post( __( 'Go to <a href="%s" target="_blank" rel="noopener noreferrer">Companies House Developer Hub &rarr; Your applications</a>.', 'planetary-company-search-for-companies-house' ) ),
 							'https://developer.company-information.service.gov.uk/manage-applications'
 						);
 						?>
 					</li>
-					<li><?php esc_html_e( 'Create an API key of type "REST" (recommended for server-side requests) or "Web".', 'company-house' ); ?></li>
-					<li><?php esc_html_e( 'If using a REST key locally (e.g., XAMPP / localhost), leave "Restricted IPs" blank in the Companies House dashboard so your local IP is not blocked with a 400 error.', 'company-house' ); ?></li>
-					<li><?php esc_html_e( 'If using a Web key, ensure your site domain (e.g., http://localhost) is added to "JavaScript domains".', 'company-house' ); ?></li>
+					<li><?php esc_html_e( 'Create an API key of type "REST" (recommended for server-side requests) or "Web".', 'planetary-company-search-for-companies-house' ); ?></li>
+					<li><?php esc_html_e( 'If using a REST key locally (e.g., XAMPP / localhost), leave "Restricted IPs" blank in the Companies House dashboard so your local IP is not blocked with a 400 error.', 'planetary-company-search-for-companies-house' ); ?></li>
+					<li><?php esc_html_e( 'If using a Web key, ensure your site domain (e.g., http://localhost) is added to "JavaScript domains".', 'planetary-company-search-for-companies-house' ); ?></li>
 				</ol>
-				<h2><?php esc_html_e( 'Shortcode Usage', 'company-house' ); ?></h2>
-				<p><?php esc_html_e( 'Add the following shortcode to any page, post, or widget to display the Companies House search interface:', 'company-house' ); ?></p>
+				<h2><?php esc_html_e( 'Shortcode Usage', 'planetary-company-search-for-companies-house' ); ?></h2>
+				<p><?php esc_html_e( 'Add the following shortcode to any page, post, or widget to display the Companies House search interface:', 'planetary-company-search-for-companies-house' ); ?></p>
 				<code>[company_house]</code>
 			</div>
 			<?php
@@ -178,7 +178,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 		public function setup_sections() {
 			add_settings_section(
 				'company_house_api',
-				__( 'Companies House API Configuration', 'company-house' ),
+				__( 'Companies House API Configuration', 'planetary-company-search-for-companies-house' ),
 				array( $this, 'render_section_intro' ),
 				'company_house_options'
 			);
@@ -188,7 +188,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 		 * Render section description text.
 		 */
 		public function render_section_intro() {
-			echo '<p>' . esc_html__( 'Enter your UK Companies House API key below. The plugin automatically encodes it using HTTP Basic Authentication (api_key:) per the Companies House Authorisation specification.', 'company-house' ) . '</p>';
+			echo '<p>' . esc_html__( 'Enter your UK Companies House API key below. The plugin automatically encodes it using HTTP Basic Authentication (api_key:) per the Companies House Authorisation specification.', 'planetary-company-search-for-companies-house' ) . '</p>';
 		}
 
 		/**
@@ -198,15 +198,15 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			$fields = array(
 				array(
 					'uid'          => 'chsp_api_key',
-					'label'        => __( 'API Key', 'company-house' ),
+					'label'        => __( 'API Key', 'planetary-company-search-for-companies-house' ),
 					'section'      => 'company_house_api',
 					'type'         => 'text',
 					'default'      => '',
 					'placeholder'  => 'e.g. xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-					'helper'       => __( 'Paste your raw API key (without trailing colon).', 'company-house' ),
+					'helper'       => __( 'Paste your raw API key (without trailing colon).', 'planetary-company-search-for-companies-house' ),
 					'supplemental' => sprintf(
 						/* translators: %s: Companies House developer hub URL */
-						__( 'Get a free API key at the <a href="%s" target="_blank" rel="noopener noreferrer">Companies House Developer Hub</a>.', 'company-house' ),
+						__( 'Get a free API key at the <a href="%s" target="_blank" rel="noopener noreferrer">Companies House Developer Hub</a>.', 'planetary-company-search-for-companies-house' ),
 						'https://developer.company-information.service.gov.uk/manage-applications'
 					),
 				),
@@ -388,25 +388,25 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			if ( 400 === $status_code || 401 === $status_code ) {
 				$hint = sprintf(
 					/* translators: %d: HTTP status code */
-					__( 'Companies House rejected the API key or request origin/IP (HTTP %d). ', 'company-house' ),
+					__( 'Companies House rejected the API key or request origin/IP (HTTP %d). ', 'planetary-company-search-for-companies-house' ),
 					$status_code
 				);
 				if ( $api_reason ) {
 					/* translators: %s: Error message from Companies House API */
-					$hint .= sprintf( __( 'API message: "%s". ', 'company-house' ), $api_reason );
+					$hint .= sprintf( __( 'API message: "%s". ', 'planetary-company-search-for-companies-house' ), $api_reason );
 				}
-				$hint .= __( 'Please verify in the Companies House Developer Hub that: (1) your API key is a Live REST key, (2) "Restricted IPs" is left blank if testing on localhost/XAMPP, and (3) the key in WP Admin -> Company House has no extra characters.', 'company-house' );
+				$hint .= __( 'Please verify in the Companies House Developer Hub that: (1) your API key is a Live REST key, (2) "Restricted IPs" is left blank if testing on localhost/XAMPP, and (3) the key in WP Admin -> Company House has no extra characters.', 'planetary-company-search-for-companies-house' );
 				return $hint;
 			}
 
 			if ( 429 === $status_code ) {
-				return __( 'Rate limit exceeded (600 requests per 5 minutes). Please wait a moment and try again.', 'company-house' );
+				return __( 'Rate limit exceeded (600 requests per 5 minutes). Please wait a moment and try again.', 'planetary-company-search-for-companies-house' );
 			}
 
 			if ( $api_reason ) {
 				return sprintf(
 					/* translators: 1: HTTP status code, 2: API error string */
-					__( 'Companies House API error (HTTP %1$d): %2$s', 'company-house' ),
+					__( 'Companies House API error (HTTP %1$d): %2$s', 'planetary-company-search-for-companies-house' ),
 					$status_code,
 					$api_reason
 				);
@@ -414,7 +414,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 
 			return sprintf(
 				/* translators: %d: HTTP status code */
-				__( 'Companies House API returned HTTP status %d.', 'company-house' ),
+				__( 'Companies House API returned HTTP status %d.', 'planetary-company-search-for-companies-house' ),
 				$status_code
 			);
 		}
@@ -432,7 +432,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			if ( empty( $api_key ) || 'XXXXXXXXXX' === $api_key ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Companies House API key is not configured. Please enter a valid API key in WP Admin -> Company House.', 'company-house' ),
+						'message' => __( 'Companies House API key is not configured. Please enter a valid API key in WP Admin -> Company House.', 'planetary-company-search-for-companies-house' ),
 					),
 					400
 				);
@@ -449,7 +449,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			switch ( $request_type ) {
 				case 'search_companies':
 					if ( '' === $query ) {
-						wp_send_json_error( array( 'message' => __( 'Please enter a search term.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Please enter a search term.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = '/search/companies?' . http_build_query(
 						array(
@@ -465,7 +465,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 
 				case 'search_officers':
 					if ( '' === $query ) {
-						wp_send_json_error( array( 'message' => __( 'Please enter an officer name to search.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Please enter an officer name to search.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = '/search/officers?' . http_build_query(
 						array(
@@ -481,7 +481,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 
 				case 'search_disqualified':
 					if ( '' === $query ) {
-						wp_send_json_error( array( 'message' => __( 'Please enter a name to search disqualified officers.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Please enter a name to search disqualified officers.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = '/search/disqualified-officers?' . http_build_query(
 						array(
@@ -498,7 +498,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 				case 'company_detail':
 					$company_number = isset( $_GET['company_number'] ) ? preg_replace( '/[^A-Za-z0-9]/', '', sanitize_text_field( wp_unslash( $_GET['company_number'] ) ) ) : '';
 					if ( empty( $company_number ) ) {
-						wp_send_json_error( array( 'message' => __( 'Invalid company number.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Invalid company number.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = '/company/' . rawurlencode( $company_number );
 					break;
@@ -506,7 +506,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 				case 'company_officers':
 					$company_number = isset( $_GET['company_number'] ) ? preg_replace( '/[^A-Za-z0-9]/', '', sanitize_text_field( wp_unslash( $_GET['company_number'] ) ) ) : '';
 					if ( empty( $company_number ) ) {
-						wp_send_json_error( array( 'message' => __( 'Invalid company number.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Invalid company number.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = '/company/' . rawurlencode( $company_number ) . '/officers?' . http_build_query(
 						array(
@@ -522,13 +522,13 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 				case 'disqualified_detail':
 					$resource_path = isset( $_GET['resource_path'] ) ? sanitize_text_field( wp_unslash( $_GET['resource_path'] ) ) : '';
 					if ( ! preg_match( '#^/disqualified-officers/(natural|corporate)/[A-Za-z0-9_-]+$#', $resource_path ) ) {
-						wp_send_json_error( array( 'message' => __( 'Invalid disqualified officer resource path.', 'company-house' ) ), 400 );
+						wp_send_json_error( array( 'message' => __( 'Invalid disqualified officer resource path.', 'planetary-company-search-for-companies-house' ) ), 400 );
 					}
 					$path_and_query = $resource_path;
 					break;
 
 				default:
-					wp_send_json_error( array( 'message' => __( 'Unsupported request type.', 'company-house' ) ), 400 );
+					wp_send_json_error( array( 'message' => __( 'Unsupported request type.', 'planetary-company-search-for-companies-house' ) ), 400 );
 			}
 
 			$response = $this->request_companies_house( $path_and_query, $api_key );
@@ -536,7 +536,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			if ( is_wp_error( $response ) ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Failed to connect to Companies House API: ', 'company-house' ) . $response->get_error_message(),
+						'message' => __( 'Failed to connect to Companies House API: ', 'planetary-company-search-for-companies-house' ) . $response->get_error_message(),
 					),
 					502
 				);
@@ -574,33 +574,33 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 			?>
 			<div class="ch_wrapper">
 				<div class="ch_search_form">
-					<div class="ch_search_tabs" role="tablist" aria-label="<?php esc_attr_e( 'Search Category', 'company-house' ); ?>">
-						<button type="button" class="ch_tab_btn active" data-type="search_companies" data-placeholder="<?php esc_attr_e( 'Search companies by name or number...', 'company-house' ); ?>">
-							<?php esc_html_e( 'Companies', 'company-house' ); ?>
+					<div class="ch_search_tabs" role="tablist" aria-label="<?php esc_attr_e( 'Search Category', 'planetary-company-search-for-companies-house' ); ?>">
+						<button type="button" class="ch_tab_btn active" data-type="search_companies" data-placeholder="<?php esc_attr_e( 'Search companies by name or number...', 'planetary-company-search-for-companies-house' ); ?>">
+							<?php esc_html_e( 'Companies', 'planetary-company-search-for-companies-house' ); ?>
 						</button>
-						<button type="button" class="ch_tab_btn" data-type="search_officers" data-placeholder="<?php esc_attr_e( 'Search officers by name...', 'company-house' ); ?>">
-							<?php esc_html_e( 'Officers', 'company-house' ); ?>
+						<button type="button" class="ch_tab_btn" data-type="search_officers" data-placeholder="<?php esc_attr_e( 'Search officers by name...', 'planetary-company-search-for-companies-house' ); ?>">
+							<?php esc_html_e( 'Officers', 'planetary-company-search-for-companies-house' ); ?>
 						</button>
-						<button type="button" class="ch_tab_btn" data-type="search_disqualified" data-placeholder="<?php esc_attr_e( 'Search disqualified officers...', 'company-house' ); ?>">
-							<?php esc_html_e( 'Disqualified Officers', 'company-house' ); ?>
+						<button type="button" class="ch_tab_btn" data-type="search_disqualified" data-placeholder="<?php esc_attr_e( 'Search disqualified officers...', 'planetary-company-search-for-companies-house' ); ?>">
+							<?php esc_html_e( 'Disqualified Officers', 'planetary-company-search-for-companies-house' ); ?>
 						</button>
 					</div>
 
 					<form id="ch_companysearch" method="post">
 						<fieldset>
-							<legend class="screen-reader-text"><?php esc_html_e( 'Search Companies House', 'company-house' ); ?></legend>
+							<legend class="screen-reader-text"><?php esc_html_e( 'Search Companies House', 'planetary-company-search-for-companies-house' ); ?></legend>
 							<input type="hidden" name="ch_search_type" id="ch_search_type" value="search_companies" />
 							<div class="ch_input_group">
 								<input
 									type="text"
 									name="company_name"
-									placeholder="<?php esc_attr_e( 'Search companies by name or number...', 'company-house' ); ?>"
+									placeholder="<?php esc_attr_e( 'Search companies by name or number...', 'planetary-company-search-for-companies-house' ); ?>"
 									id="company_name"
 									class="input-control"
 									required
 								/>
 								<span class="ch_input_group_btn">
-									<button type="submit" class="ch-btn ch-btn-default"><?php esc_html_e( 'Search', 'company-house' ); ?></button>
+									<button type="submit" class="ch-btn ch-btn-default"><?php esc_html_e( 'Search', 'planetary-company-search-for-companies-house' ); ?></button>
 								</span>
 							</div>
 						</fieldset>
@@ -625,7 +625,7 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 					<div class="ch_popup_info" role="dialog" aria-modal="true" aria-labelledby="ch_company_name">
 						<div class="ch_popup_header">
 							<h2 id="ch_company_name"></h2>
-							<button type="button" id="ch_popup_info_close" class="ch_popup_close_btn" aria-label="<?php esc_attr_e( 'Close modal', 'company-house' ); ?>">&times;</button>
+							<button type="button" id="ch_popup_info_close" class="ch_popup_close_btn" aria-label="<?php esc_attr_e( 'Close modal', 'planetary-company-search-for-companies-house' ); ?>">&times;</button>
 						</div>
 
 						<div class="ch_loading" id="floatloading"></div>
@@ -633,48 +633,48 @@ if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 						<div id="ch_popup_info_data">
 							<!-- Company Detail Tabs -->
 							<div class="ch_modal_tabs" id="ch_modal_tabs">
-								<button type="button" class="ch_modal_tab active" data-target="#ch_modal_overview"><?php esc_html_e( 'Overview', 'company-house' ); ?></button>
-								<button type="button" class="ch_modal_tab" data-target="#ch_modal_officers" id="ch_load_officers_tab"><?php esc_html_e( 'Officers', 'company-house' ); ?></button>
+								<button type="button" class="ch_modal_tab active" data-target="#ch_modal_overview"><?php esc_html_e( 'Overview', 'planetary-company-search-for-companies-house' ); ?></button>
+								<button type="button" class="ch_modal_tab" data-target="#ch_modal_officers" id="ch_load_officers_tab"><?php esc_html_e( 'Officers', 'planetary-company-search-for-companies-house' ); ?></button>
 							</div>
 
 							<!-- Overview Pane -->
 							<div id="ch_modal_overview" class="ch_modal_pane active">
 								<p class="ch_company_num_line">
-									<strong><?php esc_html_e( 'Company Number:', 'company-house' ); ?></strong>
+									<strong><?php esc_html_e( 'Company Number:', 'planetary-company-search-for-companies-house' ); ?></strong>
 									<span id="ch_company_number"></span>
 								</p>
 								<hr />
 								<div class="ch_detail_grid">
-									<div><strong><?php esc_html_e( 'Registered Address:', 'company-house' ); ?></strong> <span id="ch_company_address"></span></div>
-									<div><strong><?php esc_html_e( 'Company Status:', 'company-house' ); ?></strong> <span id="ch_company_status" class="ch_status_badge"></span></div>
-									<div><strong><?php esc_html_e( 'Company Type:', 'company-house' ); ?></strong> <span id="ch_company_type"></span></div>
-									<div><strong><?php esc_html_e( 'Incorporated On:', 'company-house' ); ?></strong> <span id="ch_company_incorporation_on"></span></div>
+									<div><strong><?php esc_html_e( 'Registered Address:', 'planetary-company-search-for-companies-house' ); ?></strong> <span id="ch_company_address"></span></div>
+									<div><strong><?php esc_html_e( 'Company Status:', 'planetary-company-search-for-companies-house' ); ?></strong> <span id="ch_company_status" class="ch_status_badge"></span></div>
+									<div><strong><?php esc_html_e( 'Company Type:', 'planetary-company-search-for-companies-house' ); ?></strong> <span id="ch_company_type"></span></div>
+									<div><strong><?php esc_html_e( 'Incorporated On:', 'planetary-company-search-for-companies-house' ); ?></strong> <span id="ch_company_incorporation_on"></span></div>
 								</div>
 								<hr />
 								<div class="ch_detail_columns">
 									<div class="ch_detail_box">
-										<strong><?php esc_html_e( 'Accounts', 'company-house' ); ?></strong>
+										<strong><?php esc_html_e( 'Accounts', 'planetary-company-search-for-companies-house' ); ?></strong>
 										<p>
-											<?php esc_html_e( 'Next accounts made up to:', 'company-house' ); ?> <span id="period_end_on"></span><br />
-											<?php esc_html_e( 'Due by:', 'company-house' ); ?> <span id="due_on"></span><br />
-											<?php esc_html_e( 'Last accounts made up to:', 'company-house' ); ?> <span id="made_up_to"></span>
+											<?php esc_html_e( 'Next accounts made up to:', 'planetary-company-search-for-companies-house' ); ?> <span id="period_end_on"></span><br />
+											<?php esc_html_e( 'Due by:', 'planetary-company-search-for-companies-house' ); ?> <span id="due_on"></span><br />
+											<?php esc_html_e( 'Last accounts made up to:', 'planetary-company-search-for-companies-house' ); ?> <span id="made_up_to"></span>
 										</p>
 									</div>
 									<div class="ch_detail_box">
-										<strong><?php esc_html_e( 'Confirmation Statement', 'company-house' ); ?></strong>
+										<strong><?php esc_html_e( 'Confirmation Statement', 'planetary-company-search-for-companies-house' ); ?></strong>
 										<p>
-											<?php esc_html_e( 'Next statement date:', 'company-house' ); ?> <span id="next_made_up_to"></span><br />
-											<?php esc_html_e( 'Due by:', 'company-house' ); ?> <span id="next_due"></span><br />
-											<?php esc_html_e( 'Last statement dated:', 'company-house' ); ?> <span id="last_made_up_to"></span>
+											<?php esc_html_e( 'Next statement date:', 'planetary-company-search-for-companies-house' ); ?> <span id="next_made_up_to"></span><br />
+											<?php esc_html_e( 'Due by:', 'planetary-company-search-for-companies-house' ); ?> <span id="next_due"></span><br />
+											<?php esc_html_e( 'Last statement dated:', 'planetary-company-search-for-companies-house' ); ?> <span id="last_made_up_to"></span>
 										</p>
 									</div>
 								</div>
 								<p>
-									<strong><?php esc_html_e( 'Nature of Business (SIC):', 'company-house' ); ?></strong><br />
+									<strong><?php esc_html_e( 'Nature of Business (SIC):', 'planetary-company-search-for-companies-house' ); ?></strong><br />
 									<span id="sic_codes"></span>
 								</p>
 								<div id="ch_previous_names_wrap">
-									<p><strong><?php esc_html_e( 'Previous Company Names', 'company-house' ); ?></strong></p>
+									<p><strong><?php esc_html_e( 'Previous Company Names', 'planetary-company-search-for-companies-house' ); ?></strong></p>
 									<table id="previous_company" class="ch_sub_table"></table>
 								</div>
 							</div>
