@@ -1,29 +1,33 @@
 <?php
 /**
- * Plugin Name: Company House Search
- * Plugin URI:  https://planetarymarketing.in
- * Description: Search UK Companies House records including companies, company officers, and disqualified officers via shortcode [company_house].
- * Version:     2.0.1
+ * Plugin Name:       Company House Search
+ * Plugin URI:        https://github.com/pawansharma06/company-house
+ * Description:       Search UK Companies House records including companies, company officers, and disqualified officers via shortcode [company_house].
+ * Version:           2.0.1
  * Requires at least: 5.0
- * Requires PHP: 7.2
- * Author:      Pawan Sharma
- * Author URI:  https://facebook.com/pawan6161
- * License:     GPL v2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: company-house
+ * Tested up to:      6.7
+ * Requires PHP:      7.2
+ * Author:            Pawan Sharma
+ * Author URI:        https://planetarymarketing.in
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       company-house
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'CH_PLUGIN_VERSION', '2.0.1' );
-define( 'CH_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'CH_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'CHSP_PLUGIN_VERSION', '2.0.1' );
+define( 'CHSP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'CHSP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
-if ( ! class_exists( 'Company_House' ) ) {
+if ( ! class_exists( 'Company_House_Search_Plugin' ) ) {
 
-	class Company_House {
+	/**
+	 * Main plugin class for Company House Search.
+	 */
+	class Company_House_Search_Plugin {
 
 		/**
 		 * Live Base URL for Companies House Public Data API.
@@ -47,11 +51,11 @@ if ( ! class_exists( 'Company_House' ) ) {
 			add_action( 'admin_init', array( $this, 'setup_sections' ) );
 			add_action( 'admin_init', array( $this, 'setup_fields' ) );
 			add_shortcode( 'company_house', array( $this, 'company_house_shortcode_function' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'register_ch_assets' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
 
 			// Server-side AJAX endpoints.
-			add_action( 'wp_ajax_ch_api_request', array( $this, 'handle_ajax_request' ) );
-			add_action( 'wp_ajax_nopriv_ch_api_request', array( $this, 'handle_ajax_request' ) );
+			add_action( 'wp_ajax_chsp_api_request', array( $this, 'handle_ajax_request' ) );
+			add_action( 'wp_ajax_nopriv_chsp_api_request', array( $this, 'handle_ajax_request' ) );
 		}
 
 		/**
@@ -63,7 +67,10 @@ if ( ! class_exists( 'Company_House' ) ) {
 		 * @return string
 		 */
 		private function get_api_key() {
-			$key = get_option( 'ch_api_key', '' );
+			$key = get_option( 'chsp_api_key', '' );
+			if ( '' === trim( (string) $key ) ) {
+				$key = get_option( 'ch_api_key', '' );
+			}
 			if ( '' === trim( (string) $key ) ) {
 				// Fallback to legacy option name from v1.0.
 				$key = get_option( 'api_key', '' );
@@ -85,29 +92,29 @@ if ( ! class_exists( 'Company_House' ) ) {
 		/**
 		 * Register frontend scripts and styles (enqueued on demand when shortcode runs).
 		 */
-		public function register_ch_assets() {
+		public function register_assets() {
 			wp_register_style(
 				'company-house-plug-css',
-				CH_PLUGIN_URL . 'css/ch.css',
+				CHSP_PLUGIN_URL . 'css/ch.css',
 				array(),
-				CH_PLUGIN_VERSION
+				CHSP_PLUGIN_VERSION
 			);
 
 			wp_register_script(
 				'company-house-plug-js',
-				CH_PLUGIN_URL . 'js/ch.js',
+				CHSP_PLUGIN_URL . 'js/ch.js',
 				array( 'jquery' ),
-				CH_PLUGIN_VERSION,
+				CHSP_PLUGIN_VERSION,
 				true
 			);
 
 			wp_localize_script(
 				'company-house-plug-js',
-				'ch_ajax_obj',
+				'chsp_ajax_obj',
 				array(
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
-					'nonce'       => wp_create_nonce( 'ch_search_nonce' ),
-					'loading_img' => esc_url( CH_PLUGIN_URL . 'images/loading.gif' ),
+					'nonce'       => wp_create_nonce( 'chsp_search_nonce' ),
+					'loading_img' => esc_url( CHSP_PLUGIN_URL . 'images/loading.gif' ),
 				)
 			);
 		}
@@ -173,11 +180,16 @@ if ( ! class_exists( 'Company_House' ) ) {
 			add_settings_section(
 				'company_house_api',
 				__( 'Companies House API Configuration', 'company-house' ),
-				function() {
-					echo '<p>' . esc_html__( 'Enter your UK Companies House API key below. The plugin automatically encodes it using HTTP Basic Authentication (api_key:) per the Companies House Authorisation specification.', 'company-house' ) . '</p>';
-				},
+				array( $this, 'render_section_intro' ),
 				'company_house_options'
 			);
+		}
+
+		/**
+		 * Render section description text.
+		 */
+		public function render_section_intro() {
+			echo '<p>' . esc_html__( 'Enter your UK Companies House API key below. The plugin automatically encodes it using HTTP Basic Authentication (api_key:) per the Companies House Authorisation specification.', 'company-house' ) . '</p>';
 		}
 
 		/**
@@ -186,7 +198,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 		public function setup_fields() {
 			$fields = array(
 				array(
-					'uid'          => 'ch_api_key',
+					'uid'          => 'chsp_api_key',
 					'label'        => __( 'API Key', 'company-house' ),
 					'section'      => 'company_house_api',
 					'type'         => 'text',
@@ -224,7 +236,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 		}
 
 		/**
-		 * Sanitize API key when saved and sync legacy option name.
+		 * Sanitize API key when saved.
 		 *
 		 * @param string $value Raw input value.
 		 * @return string
@@ -236,12 +248,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 				$clean = trim( substr( $clean, 6 ) );
 			}
 			$clean = rtrim( $clean, ':' );
-			$clean = trim( $clean );
-
-			// Keep legacy option synced for backward compatibility.
-			update_option( 'api_key', $clean );
-
-			return $clean;
+			return trim( $clean );
 		}
 
 		/**
@@ -290,6 +297,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 		 */
 		private function request_companies_house( $path_and_query, $api_key ) {
 			// RFC 2617 HTTP Basic Authentication: API key as username, blank password ("api_key:").
+			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$auth_header = 'Basic ' . base64_encode( $api_key . ':' );
 
 			$base_headers = array(
@@ -379,8 +387,13 @@ if ( ! class_exists( 'Company_House' ) ) {
 			}
 
 			if ( 400 === $status_code || 401 === $status_code ) {
-				$hint = __( 'Companies House rejected the API key or request origin/IP (HTTP ', 'company-house' ) . $status_code . '). ';
+				$hint = sprintf(
+					/* translators: %d: HTTP status code */
+					__( 'Companies House rejected the API key or request origin/IP (HTTP %d). ', 'company-house' ),
+					$status_code
+				);
 				if ( $api_reason ) {
+					/* translators: %s: Error message from Companies House API */
 					$hint .= sprintf( __( 'API message: "%s". ', 'company-house' ), $api_reason );
 				}
 				$hint .= __( 'Please verify in the Companies House Developer Hub that: (1) your API key is a Live REST key, (2) "Restricted IPs" is left blank if testing on localhost/XAMPP, and (3) the key in WP Admin -> Company House has no extra characters.', 'company-house' );
@@ -414,7 +427,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 		 * https://developer-specs.company-information.service.gov.uk/companies-house-public-data-api/reference
 		 */
 		public function handle_ajax_request() {
-			check_ajax_referer( 'ch_search_nonce', 'nonce' );
+			check_ajax_referer( 'chsp_search_nonce', 'nonce' );
 
 			$api_key = $this->get_api_key();
 			if ( empty( $api_key ) || 'XXXXXXXXXX' === $api_key ) {
@@ -541,7 +554,7 @@ if ( ! class_exists( 'Company_House' ) ) {
 						'status'       => $status_code,
 						'api_response' => $data ? $data : $body,
 					),
-					200 // Return 200 from admin-ajax so jQuery success handler always receives the structured error JSON cleanly.
+					200
 				);
 			}
 
@@ -685,5 +698,5 @@ if ( ! class_exists( 'Company_House' ) ) {
 		}
 	}
 
-	new Company_House();
+	new Company_House_Search_Plugin();
 }

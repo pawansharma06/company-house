@@ -44,8 +44,8 @@ jQuery(function($) {
      * Render loading spinner HTML.
      */
     function getSpinnerHtml() {
-        var src = (typeof ch_ajax_obj !== 'undefined' && ch_ajax_obj.loading_img)
-            ? ch_ajax_obj.loading_img
+        var src = (typeof chsp_ajax_obj !== 'undefined' && chsp_ajax_obj.loading_img)
+            ? chsp_ajax_obj.loading_img
             : '';
         if (src) {
             return '<img src="' + escapeHtml(src) + '" alt="Loading..." />';
@@ -186,12 +186,12 @@ jQuery(function($) {
         $('#loading').html(getSpinnerHtml());
 
         $.ajax({
-            url: ch_ajax_obj.ajax_url,
+            url: chsp_ajax_obj.ajax_url,
             type: 'GET',
             dataType: 'json',
             data: {
-                action: 'ch_api_request',
-                nonce: ch_ajax_obj.nonce,
+                action: 'chsp_api_request',
+                nonce: chsp_ajax_obj.nonce,
                 request_type: searchType,
                 q: query.trim(),
                 page: page
@@ -315,12 +315,12 @@ jQuery(function($) {
         $container.html('<div class="ch_loading">' + getSpinnerHtml() + '</div>');
 
         $.ajax({
-            url: ch_ajax_obj.ajax_url,
+            url: chsp_ajax_obj.ajax_url,
             type: 'GET',
             dataType: 'json',
             data: {
-                action: 'ch_api_request',
-                nonce: ch_ajax_obj.nonce,
+                action: 'chsp_api_request',
+                nonce: chsp_ajax_obj.nonce,
                 request_type: 'company_officers',
                 company_number: companyNumber
             },
@@ -383,12 +383,12 @@ jQuery(function($) {
         $('#ch_popup_overlay').fadeIn(150);
 
         $.ajax({
-            url: ch_ajax_obj.ajax_url,
+            url: chsp_ajax_obj.ajax_url,
             type: 'GET',
             dataType: 'json',
             data: {
-                action: 'ch_api_request',
-                nonce: ch_ajax_obj.nonce,
+                action: 'chsp_api_request',
+                nonce: chsp_ajax_obj.nonce,
                 request_type: 'company_detail',
                 company_number: companyNumber
             },
@@ -471,12 +471,12 @@ jQuery(function($) {
         $('#ch_popup_overlay').fadeIn(150);
 
         $.ajax({
-            url: ch_ajax_obj.ajax_url,
+            url: chsp_ajax_obj.ajax_url,
             type: 'GET',
             dataType: 'json',
             data: {
-                action: 'ch_api_request',
-                nonce: ch_ajax_obj.nonce,
+                action: 'chsp_api_request',
+                nonce: chsp_ajax_obj.nonce,
                 request_type: 'disqualified_detail',
                 resource_path: resourcePath
             },
