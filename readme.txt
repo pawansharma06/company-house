@@ -1,5 +1,5 @@
 === Planetary Company Search for Companies House ===
-Contributors: pawansharma06
+Contributors: pawan6161
 Tags: companies-house, company-search, uk-company, business-directory, company-lookup
 Donate link: https://www.paypal.com/paypalme/pawan6161
 Requires at least: 5.0
