@@ -1,11 +1,10 @@
 <?php
 /**
- * Plugin Name:       Company House Search
+ * Plugin Name:       Planetary Company Search for Companies House
  * Plugin URI:        https://github.com/pawansharma06/company-house
  * Description:       Search UK Companies House records including companies, company officers, and disqualified officers via shortcode [company_house].
  * Version:           2.0.1
  * Requires at least: 5.0
- * Tested up to:      6.7
  * Requires PHP:      7.2
  * Author:            Pawan Sharma
  * Author URI:        https://planetarymarketing.in

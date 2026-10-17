@@ -1,6 +1,6 @@
-=== Company House Search ===
+=== Planetary Company Search for Companies House ===
 Contributors: pawansharma06
-Tags: companies-house, company-search, gov-uk, hmrc, uk-companies
+Tags: companies-house, company-search, uk-company, business-directory, company-lookup
 Donate link: https://www.paypal.com/paypalme/pawan6161
 Requires at least: 5.0
 Tested up to: 6.7
